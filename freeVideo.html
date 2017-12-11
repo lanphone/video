@@ -1,0 +1,201 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta http-equiv="Lan-Scape" content="phonex" />
+    <title>VIP视频-免费看啦</title>
+
+    <style>
+        .textSt{
+            color: #ffffff
+        }
+
+    </style>
+
+<script type="text/javascript">
+
+    var iqiyi1 = "http://j.zz22x.com/jx/?url=";//爱奇艺超清接口2
+    var letv = "http://2gty.com/apiurl/yun.php?url=";//乐视视频接口
+
+    var apiList = [iqiyi1, letv,
+        "http://www.vipjiexi.com/yun.php?url=",
+        "http://mlxztz.com/player.php?url=",
+        "http://jx.ejiafarm.com/dy.php?url=",
+        "http://jx.ejiafarm.com/yun.php?url=",
+        "http://jqaaa.com/jx.php?url=",
+        //"http://jx.ejiafarm.com/jx1/dy1.php?url=",
+        "http://api.1008net.com/v.php?url=",
+
+        "http://player.jidiaose.com/supapi/iframe.php?v=",
+        "http://www.wmxz.wang/video.php?url=",
+        "http://api.97kn.com/?url=",
+        "https://jxapi.nepian.com/ckparse/?url=",
+        "http://91k.co/play.php?url=",
+        "http://www.52jiexi.com/yun.php?url=",
+        "http://mt2t.com/yun?url=",
+        "http://vipjiexi.com/vip.php?url=",
+        "http://jx.ck921.com/?url=",
+        "http://s1y2.com/?url=",
+
+        "http://www.ou522.cn/t2/1.php?url=",
+        "http://yun.mt2t.com/yun?url=",
+        "http://www.sfsft.com/video.php?url=",
+        "http://www.82190555.com/video.php?url=",
+        "http://2.jx.72du.com/video.php?url=",
+        "http://jx.vgoodapi.com/jx.php?url=",
+        "http://www.dgua.xyz/webcloud/?url=",
+        "http://api.91exp.com/svip/?url=",
+        "http://jiexi.071811.cc/jx.php?url=",
+        "http://api.662820.com/xnflv/channerId.php?url=",
+
+        "http://yyygwz.com/channerId.php?url=",
+        "http://lookxw.com/yingzi/?url=",
+        "http://www.0335haibo.com/tong.php?url=",
+        "http://api.lequgirl.com/?url="
+    ];
+
+    var channerId = 0;
+    var intervalId = 0;
+    var interval = 15000;
+    var isFocusIpt = false;
+    var urlStr;
+    var urlProm = "请把视频地址粘贴至此";
+    
+    function autoChange() {
+        if (!canDo())
+            return;
+        if (!isFocusIpt)
+            stepChannel();
+        goOnChange();
+    }
+
+    function urlChange() {
+        var url = getElem("url").value;
+        if (url == "" || url == urlProm || url.indexOf("http") != 0 || url == urlStr)
+            return;
+        urlStr = url;
+        setIntervalTime();
+        play();
+    }
+
+    function canDo(){
+        if (!urlStr)
+            return false;
+        return true;
+    }
+
+    function setBtnState(val) {
+        var changeBtn = getElem("changeBtn");
+        changeBtn.type = !val ? "hidden" : "button";
+
+        var stopBtn = getElem("stopBtn");
+        stopBtn.type = val ? "hidden" : "button";
+    }
+
+    function stopChange() {
+        if (intervalId == 0)
+            return;
+        setBtnState(true);
+        clearInterval(intervalId);
+        intervalId = 0;
+    }
+
+    function setIntervalTime() {
+        interval = parseInt(getElem("intervalTime").value) * 1000;
+        if (intervalId > 0) {
+            stopChange();
+            stepChannel();
+            goOnChange();
+        }
+    }
+
+    function goOnChange() {
+        setBtnState(false);
+        intervalId = setInterval(stepChannel, interval);
+    }
+
+    function stepChannel() {
+        channerId++;
+        if (channerId >= apiList.length) {
+            stopChange();
+            setTimeout(function () { alert("抱歉，已经搜索所有线路啦！") }, 50);
+            return;
+        }
+        play();
+    }
+
+    function setChannel() {
+        var c = parseInt(getElem("channel").value) - 1;
+        if (c == channerId) return;
+        var l = apiList.length;
+        if (c >= l)
+            c = l - 1;
+        else if (c < 0)
+            c = 0;
+        channerId = c;
+
+        if (!canDo())
+            return;
+        stopChange();
+        play();
+    }
+
+
+    function play() {
+        var channel = getElem("channel");
+        channel.value = (channerId + 1) + "";
+        var ifram = getElem("iframepage");
+        ifram.src = apiList[channerId] + urlStr;
+    }
+
+    function getElem(id) {
+        return document.getElementById(id);
+    }
+
+    function onFocusInUrl() {
+        var urlIpt = getElem("url");
+        urlIpt.value = "";
+        urlIpt.style.color = "#000000";
+        setIptFocus(true);
+    }
+
+    function onFocusOutUrl() {
+        var urlIpt = getElem("url");
+        setIptFocus(false);
+        if (urlIpt.value == "") {
+            urlIpt.value = urlProm;
+            urlIpt.style.color = "#666666";
+        }
+    }
+
+    function setIptFocus(val){
+        if (val)
+            isFocusIpt = true;
+        else
+            setTimeout(function(){isFocusIpt = false}, 50);        
+    }
+</script>
+
+</head>
+
+<body bgcolor="#222222" onload="onFocusOutUrl()">
+
+<div style="height: 90%;width: 100%; position: relative; background-color: #444444;">
+<iframe id="iframepage" allowfullscreen="ture" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
+    height="100%" width="100%"></iframe>
+</div>
+<div style="height:10%; width: 100%; background-color: #333333">
+<br>
+<input type="text" id="url" style="width: 40%;" onchange="urlChange()" onblur="onFocusOutUrl()" onfocus="onFocusInUrl()">
+<span class="textSt">当前线路</span>
+<input type="text" id="channel" style="width: 30px" value="1" onchange="setChannel()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)">
+<span class="textSt">切换间隔</span>
+<input type="text" id="intervalTime" value="10" style="width: 30px" onchange="setIntervalTime()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)">
+<span class="textSt">秒</span>
+<input type="button" id="changeBtn" onclick="autoChange()" value="自动切换">
+<input type="hidden" id="stopBtn" onclick="stopChange()" value="停止切换">
+</div>
+</body>
+
+</html>
