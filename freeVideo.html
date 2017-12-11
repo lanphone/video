@@ -61,7 +61,7 @@
     var isFocusIpt = false;
     var urlStr;
     var urlProm = "请把视频地址粘贴至此";
-    
+
     function autoChange() {
         if (!canDo())
             return;
@@ -79,7 +79,7 @@
         play();
     }
 
-    function canDo(){
+    function canDo() {
         if (!urlStr)
             return false;
         return true;
@@ -126,14 +126,15 @@
     }
 
     function setChannel() {
-        var c = parseInt(getElem("channel").value) - 1;
+        var chlIpt = getElem("channel");
+        var c = parseInt(chlIpt.value) - 1;
         if (c == channerId) return;
         var l = apiList.length;
         if (c >= l)
             c = l - 1;
         else if (c < 0)
             c = 0;
-        channerId = c;
+        chlIpt.value = channerId = c;
 
         if (!canDo())
             return;
@@ -169,17 +170,36 @@
         }
     }
 
-    function setIptFocus(val){
+    function setIptFocus(val) {
         if (val)
             isFocusIpt = true;
         else
-            setTimeout(function(){isFocusIpt = false}, 50);        
+            setTimeout(function () { isFocusIpt = false }, 50);
+    }
+
+    function onlyNum(event) {
+        //event.returnValue = /[\d]/.test(String.fromCharCode(event.charCode));
+        event.value = event.value.replace(/[^\d]/g, "");
+    }
+
+    function onBodyLoaded() {
+        disabledIpt("intervalTime");
+        disabledIpt("channel");
+        onFocusOutUrl();
+    }
+
+    function disabledIpt(id) {
+        var ipt = getElem(id);
+        ipt.onpaste = function () { return false };
+        ipt.ondragenter = function () { return false };
+        ipt.oncontextmenu = function () { return false; };
+        //ipt.style = "ime-mode:disabled";
     }
 </script>
 
 </head>
 
-<body bgcolor="#222222" onload="onFocusOutUrl()">
+<body bgcolor="#222222" onload="onBodyLoaded()">
 
 <div style="height: 90%;width: 100%; position: relative; background-color: #444444;">
 <iframe id="iframepage" allowfullscreen="ture" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
@@ -189,9 +209,9 @@
 <br>
 <input type="text" id="url" style="width: 40%;" onchange="urlChange()" onblur="onFocusOutUrl()" onfocus="onFocusInUrl()">
 <span class="textSt">当前线路</span>
-<input type="text" id="channel" style="width: 30px" value="1" onchange="setChannel()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)">
+<input type="text" id="channel" style="width: 30px" value="1" onchange="setChannel()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)" onkeyup="onlyNum(this)">
 <span class="textSt">切换间隔</span>
-<input type="text" id="intervalTime" value="10" style="width: 30px" onchange="setIntervalTime()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)">
+<input type="text" id="intervalTime" value="10" style="width: 30px" onchange="setIntervalTime()" onblur="setIptFocus(false)" onfocus="setIptFocus(true)" onkeyup="onlyNum(this)">
 <span class="textSt">秒</span>
 <input type="button" id="changeBtn" onclick="autoChange()" value="自动切换">
 <input type="hidden" id="stopBtn" onclick="stopChange()" value="停止切换">
