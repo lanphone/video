@@ -1,2 +1,2 @@
 # video
-the file of "freeVideo.html" for view the free vip video and no ad in youku,iqiyi,mgtv
+看视频神器，免费看优酷，爱奇艺，腾讯，芒果的vip视频，而且无广告哟
