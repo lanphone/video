@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="zh-CN" />
-    <meta http-equiv="Land-Scape" content="phonex" />
-    <title>优酷-腾讯-爱奇艺-芒果tv-无广告-VIP视频-免费看啦</title>
+    <meta http-equiv="Land-Scape" content="iphonex" />
+    <title>全网免费VIP视频-优酷-腾讯-爱奇艺-芒果tv</title>
 
     <style>
         .textSt{
@@ -16,42 +16,14 @@
 <script type="text/javascript">
 
     var apiList = [
-        "http://jx.ejiafarm.com/yun.php?url=",
         "http://jqaaa.com/jx.php?url=",
-        //"http://jx.ejiafarm.com/jx1/dy1.php?url=",
-        "http://api.1008net.com/v.php?url=",
-
-        "http://player.jidiaose.com/supapi/iframe.php?v=",
-        "http://www.wmxz.wang/video.php?url=",
-        "http://api.97kn.com/?url=",
-        "https://jxapi.nepian.com/ckparse/?url=",
-        "http://91k.co/play.php?url=",
-        "http://www.52jiexi.com/yun.php?url=",
-        "http://mt2t.com/yun?url=",
-        "http://vipjiexi.com/vip.php?url=",
-        "http://jx.ck921.com/?url=",
-        "http://s1y2.com/?url=",
-
-        "http://www.ou522.cn/t2/1.php?url=",
-        "http://yun.mt2t.com/yun?url=",
-        "http://www.sfsft.com/video.php?url=",
-        "http://www.82190555.com/video.php?url=",
-        "http://2.jx.72du.com/video.php?url=",
-        "http://jx.vgoodapi.com/jx.php?url=",
-        "http://www.dgua.xyz/webcloud/?url=",
-        "http://api.91exp.com/svip/?url=",
-        "http://jiexi.071811.cc/jx.php?url=",
-        "http://api.662820.com/xnflv/channelId.php?url=",
-
-        "http://yyygwz.com/channelId.php?url=",
-        "http://lookxw.com/yingzi/?url=",
-        "http://www.0335haibo.com/tong.php?url=",
-        "http://api.lequgirl.com/?url="
+        "http://jx.ejiafarm.com/yun.php?url=",
+        "http://www.wmxz.wang/video.php?url="
     ];
 
     var channelId = 0;
     var intervalId = 0;
-    var interval = 15000;
+    var interval = 10000;
     var isFocusIpt = false;
     var urlStr;
     var urlProm = "请把视频地址粘贴至此";
@@ -177,7 +149,7 @@
     }
 
     function onlyNum(event) {
-        event.value = event.value.replace(/[^\d]/g, "");
+        event.value = event.value.replace(/[^\d]/g, (channelId + 1) + "");
     }
 
     function onBodyLoaded() {
@@ -191,7 +163,6 @@
         ipt.onpaste = function () { return false };
         ipt.ondragenter = function () { return false };
         ipt.oncontextmenu = function () { return false; };
-        //ipt.style = "ime-mode:disabled";
     }
 </script>
 
